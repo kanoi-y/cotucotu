@@ -1,73 +1,75 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        cotucotu
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="wrapper">
+    <figure class="top-image">
+      <img src="~/assets/images/cotucotu-top.svg" alt="CotuCotuのトップ画像" />
+    </figure>
+    <h1 class="top-title">
+      <span class="highlight">CotuCotu</span
+      >は、「何回やったっけ？」を記録するサービスです。
+    </h1>
+    <button type="button" class="login-btn">
+      <svg class="login-btn_icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M42.4 145.9c15.5-32.3 37.4-59.6 65-82.3 37.4-30.9 80.3-49.5 128.4-55.2 56.5-6.7 109.6 4 158.7 33.4 12.2 7.3 23.6 15.6 34.5 24.6 2.7 2.2 2.4 3.5.1 5.7-22.3 22.2-44.6 44.4-66.7 66.8-2.6 2.6-4 2.4-6.8.3-64.8-49.9-159.3-36.4-207.6 29.6-8.5 11.6-15.4 24.1-20.2 37.7-.4 1.2-1.2 2.3-1.8 3.5-12.9-9.8-25.9-19.6-38.7-29.5-15-11.5-30-23-44.9-34.6z"
+          fill="#E94335"
+        />
+        <path
+          d="M126 303.8c4.3 9.5 7.9 19.4 13.3 28.3 22.7 37.2 55.1 61.1 97.8 69.6 38.5 7.7 75.5 2.5 110-16.8 1.2-.6 2.4-1.2 3.5-1.8.6.6 1.1 1.3 1.7 1.8 25.8 20 51.7 40 77.5 60-12.4 12.3-26.5 22.2-41.5 30.8-43.5 24.8-90.6 34.8-140.2 31-61.8-4.8-115.1-29.2-159.1-73.2-19.3-19.3-35.2-41.1-46.7-66 10.7-8.2 21.4-16.3 32.1-24.5 17.2-13.1 34.4-26.1 51.6-39.2z"
+          fill="#34A853"
+        />
+        <path
+          d="M429.9 444.9c-25.8-20-51.7-40-77.5-60-.6-.5-1.2-1.2-1.7-1.8 8.9-6.9 18-13.6 25.3-22.4 12.2-14.6 20.3-31.1 24.5-49.6.5-2.3.1-3.1-2.2-3-1.2.1-2.3 0-3.5 0-40.8 0-81.7-.1-122.5.1-4.5 0-5.5-1.2-5.4-5.5.2-29 .2-58 0-87 0-3.7 1-4.7 4.7-4.7 74.8.1 149.6.1 224.5 0 3.2 0 4.5.8 5.3 4.2 6.1 27.5 5.7 55.1 2 82.9-3 22.2-8.4 43.7-16.7 64.5-12.3 30.7-30.4 57.5-54.2 80.5-.9.7-1.8 1.2-2.6 1.8z"
+          fill="#4285F3"
+        />
+        <path
+          d="M126 303.8c-17.2 13.1-34.4 26.1-51.6 39.2-10.7 8.1-21.4 16.3-32.1 24.5-8.3-15.4-13.7-31.7-18.1-48.5-8.4-32.5-9.7-65.5-5.1-98.6 3.6-26 11.1-51 23.2-74.4 15 11.5 29.9 23.1 44.9 34.6 12.9 9.9 25.8 19.7 38.7 29.5-2.2 10.7-5.3 21.2-6.3 32.2-1.8 20 .1 39.5 5.8 58.7.4.8.5 1.8.6 2.8z"
+          fill="#FABB06"
+        /></svg>
+        Googleでログイン
+    </button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+<style lang="scss" scoped>
+.wrapper {
+  padding: 30px 12px 0;
   text-align: center;
 }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.top-image {
+  width: 100%;
+  margin-bottom: 12px;
+  img {
+    width: 100%;
+  }
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.top-title {
+  font-size: 1rem;
+  margin-bottom: 20px;
+
+  .highlight {
+    font-size: 1.2rem;
+  }
 }
 
-.links {
-  padding-top: 15px;
+.login-btn {
+  color: #fff;
+  background-color: #f8e6a4;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em;
+  font-size: 1.2rem;
+  &_icon {
+    width: 20px;
+    height: 20px;
+    margin-right: .4em;
+  }
 }
 </style>

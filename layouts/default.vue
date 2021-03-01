@@ -1,20 +1,29 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="wrapper">
+    <CommonHeader></CommonHeader>
+    <div class="main">
+      <Nuxt />
+    </div>
+    <footer>
+      <p>©2021 CotuCotu</p>
+    </footer>
   </div>
 </template>
 
-<style>
+<script>
+import CommonHeader from "~/components/Header.vue";
+
+export default {
+  components: {
+    CommonHeader
+  }
+};
+</script>
+
+<style lang="scss">
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -22,6 +31,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background-color: $back-color;
 }
 
 *,
@@ -31,32 +41,37 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+a {
   text-decoration: none;
-  padding: 10px 30px;
+  color: $text-color;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
 }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+p,
+small,
+h1,
+h2,
+li {
+  color: $text-color;
+}
+</style>
+
+<style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+footer {
+  margin-top: auto;
 }
 </style>

@@ -36,7 +36,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    "@nuxtjs/style-resources",
   ],
+
+  styleResources: {
+    scss: ["~/assets/scss/variables.scss", "~/assets/scss/media.scss"]
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
