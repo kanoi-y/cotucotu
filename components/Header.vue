@@ -1,17 +1,23 @@
 <template>
   <header class="header">
-    <h1 class="logo">CotuCotu</h1>
-      <button type="button" class="header_login">{{ log }}</button>
+    <h1 class="logo"><nuxt-link to="/">CotuCotu</nuxt-link></h1>
+      <button type="button" class="header_login" @click="loginout">{{ $store.getters.getStatus === "login" ? "logout" : "login" }}</button>
   </header>
 </template>
 
 <script>
 export default {
-    data() {
-      return {
-          log: 'Login',
+  methods: {
+    loginout() {
+      if (this.$store.getters.getStatus === "logout") {
+        this.$store.dispatch("login");
+      }
+      if (this.$store.getters.getStatus === "login") {
+        this.$store.dispatch("logout");
+        this.$router.push('/');
       }
     }
+  }
 };
 </script>
 

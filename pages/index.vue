@@ -7,8 +7,17 @@
       <span class="highlight">CotuCotu</span
       >は、「何回やったっけ？」を記録するサービスです。
     </h1>
-    <button type="button" class="login-btn">
-      <svg class="login-btn_icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <button
+      type="button"
+      class="login-btn"
+      @click="login"
+      v-if="$store.getters.getStatus === 'logout'"
+    >
+      <svg
+        class="login-btn_icon"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M42.4 145.9c15.5-32.3 37.4-59.6 65-82.3 37.4-30.9 80.3-49.5 128.4-55.2 56.5-6.7 109.6 4 158.7 33.4 12.2 7.3 23.6 15.6 34.5 24.6 2.7 2.2 2.4 3.5.1 5.7-22.3 22.2-44.6 44.4-66.7 66.8-2.6 2.6-4 2.4-6.8.3-64.8-49.9-159.3-36.4-207.6 29.6-8.5 11.6-15.4 24.1-20.2 37.7-.4 1.2-1.2 2.3-1.8 3.5-12.9-9.8-25.9-19.6-38.7-29.5-15-11.5-30-23-44.9-34.6z"
           fill="#E94335"
@@ -24,14 +33,36 @@
         <path
           d="M126 303.8c-17.2 13.1-34.4 26.1-51.6 39.2-10.7 8.1-21.4 16.3-32.1 24.5-8.3-15.4-13.7-31.7-18.1-48.5-8.4-32.5-9.7-65.5-5.1-98.6 3.6-26 11.1-51 23.2-74.4 15 11.5 29.9 23.1 44.9 34.6 12.9 9.9 25.8 19.7 38.7 29.5-2.2 10.7-5.3 21.2-6.3 32.2-1.8 20 .1 39.5 5.8 58.7.4.8.5 1.8.6 2.8z"
           fill="#FABB06"
-        /></svg>
-        Googleでログイン
+        />
+      </svg>
+      Googleでログイン
     </button>
+    <nuxt-link v-else class="login-btn" to="/home">ホームへ</nuxt-link>
   </div>
 </template>
 
 <script>
-export default {};
+
+export default {
+  methods: {
+    login() {
+      this.$store.dispatch("login");
+    }
+  },
+  computed: {
+    status() {
+      return this.$store.getters.getStatus;
+    }
+  },
+  watch: {
+    status(val, old) {
+      console.log(val, old);
+      if (val === "login") {
+        this.$router.push("/home");
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -66,10 +97,12 @@ export default {};
   justify-content: center;
   padding: 0.4em;
   font-size: 1.2rem;
+  box-shadow: 0 2px 5px -2px #ffd91d40;
+  font-weight: bold;
   &_icon {
     width: 20px;
     height: 20px;
-    margin-right: .4em;
+    margin-right: 0.4em;
   }
 }
 </style>
