@@ -9,12 +9,12 @@
     </h1>
     <button
       type="button"
-      class="login-btn"
+      class="cotucotu-btn"
       @click="login"
       v-if="$store.getters.getStatus === 'logout'"
     >
       <svg
-        class="login-btn_icon"
+        class="cotucotu-btn_icon"
         viewBox="0 0 512 512"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -37,7 +37,7 @@
       </svg>
       Googleでログイン
     </button>
-    <nuxt-link v-else class="login-btn" to="/home">ホームへ</nuxt-link>
+    <nuxt-link v-else class="cotucotu-btn" to="/home">ホームへ</nuxt-link>
   </div>
 </template>
 
@@ -88,21 +88,4 @@ export default {
   }
 }
 
-.login-btn {
-  color: #fff;
-  background-color: #f8e6a4;
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4em;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 5px -2px #ffd91d40;
-  font-weight: bold;
-  &_icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 0.4em;
-  }
-}
 </style>
