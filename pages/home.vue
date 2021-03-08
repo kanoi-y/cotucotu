@@ -1,18 +1,20 @@
 <template>
   <div class="wrapper">
     <div class="wrap-todos">
-      <div class="todo">
+      <div class="todo" v-for="(todo, index) in todos" :key="index">
         <div class="todo_content">
           <font-awesome-icon
-            icon="book"
+            :icon="todo.icon"
             class="todo_icon"
-            :style="{ color: color }"
+            :style="{ color: todo.color }"
           />
           <div class="todo_middle">
-            <p class="todo_title">本を読む</p>
-            <p class="todo_text">Total: <span class="todo_total">12</span></p>
+            <p class="todo_title">{{ todo.title }}</p>
+            <p class="todo_text">
+              Total: <span class="todo_total">{{ todo.total }}</span>
+            </p>
           </div>
-          <button class="todo_up">UP</button>
+          <button class="todo_up" @click="upTotal">UP</button>
         </div>
         <div class="todo_more">
           <p class="todo_more_text">More</p>
@@ -47,15 +49,22 @@
 
 <script>
 export default {
-  data() {
-    return {
-      color: "#A6F1F7"
-    };
+  middleware: ["authenticated"],
+  created() {
+    const userId = this.$store.getters.getUserUid;
+    this.$store.dispatch("todos/fetchTodos", userId);
   },
-  // middleware: ['authenticated'],
   methods: {
     addTodo() {
       console.log("hello");
+    },
+    upTotal() {
+      
+    }
+  },
+  computed: {
+    todos() {
+      return this.$store.getters["todos/getTodos"];
     }
   }
 };

@@ -3,27 +3,20 @@ import firebase from "~/plugins/firebase";
 export const state = () => ({
   userUid: "",
   userName: "",
-  status: "logout",
+  status: "logout"
 });
 
 export const mutations = {
-  setUserUid(state, userUid) {
-    state.userUid = userUid;
-  },
-  setUserName(state, userName) {
-    state.userName = userName;
-  },
   setUser(state, user) {
     state.userUid = user.uid;
     state.userName = user.displayName;
-    state.status = user.status;
+    state.status = "login";
   },
   logout(state) {
-    state.userUid = "",
-    state.userName = "",
-    state.status = "logout"
+    state.userUid = "";
+    state.userName = "";
+    state.status = "logout";
   }
-
 };
 
 export const actions = {
@@ -35,8 +28,8 @@ export const actions = {
       .signInWithPopup(provider)
       .then(function(result) {
         const user = result.user;
-        user.status = "login";
-        commit("setUser", user)
+        // user.status = "login";
+        commit("setUser", user);
       })
       .catch(function(error) {
         var errorCode = error.code;
@@ -44,10 +37,13 @@ export const actions = {
       });
   },
   logout({ commit }) {
-    firebase.auth().signOut().then(() => {
-        commit("logout")
-    })
-}
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        commit("logout");
+      });
+  }
 };
 
 export const getters = {
@@ -59,6 +55,5 @@ export const getters = {
   },
   getStatus(state) {
     return state.status;
-
   }
 };

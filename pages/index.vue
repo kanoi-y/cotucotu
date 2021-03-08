@@ -42,8 +42,16 @@
 </template>
 
 <script>
-
 export default {
+  mounted() {
+    const user = {
+      uid: window.localStorage.getItem("userId"),
+      displayName: window.localStorage.getItem("userName")
+    };
+    if (user.uid) {
+      this.$store.commit("setUser", user);
+    }
+  },
   methods: {
     login() {
       this.$store.dispatch("login");
@@ -58,6 +66,13 @@ export default {
     status(val, old) {
       console.log(val, old);
       if (val === "login") {
+        const userId = this.$store.getters.getUserUid;
+        const userName = this.$store.getters.getUserName;
+
+        if (process.client) {
+          window.localStorage.setItem("userId", userId);
+          window.localStorage.setItem("userName", userName);
+        }
         this.$router.push("/home");
       }
     }
@@ -87,5 +102,4 @@ export default {
     font-size: 1.2rem;
   }
 }
-
 </style>

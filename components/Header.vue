@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <h1 class="logo"><nuxt-link to="/">CotuCotu</nuxt-link></h1>
-      <button type="button" class="header_login" @click="loginout">{{ $store.getters.getStatus === "login" ? "logout" : "login" }}</button>
+    <button type="button" class="header_login" @click="loginout">
+      {{ $store.getters.getStatus === "login" ? "logout" : "login" }}
+    </button>
   </header>
 </template>
 
@@ -13,8 +15,12 @@ export default {
         this.$store.dispatch("login");
       }
       if (this.$store.getters.getStatus === "login") {
+        if (process.client) {
+          window.localStorage.removeItem("userId");
+          window.localStorage.removeItem("userName");
+        }
         this.$store.dispatch("logout");
-        this.$router.push('/');
+        this.$router.push("/");
       }
     }
   }
