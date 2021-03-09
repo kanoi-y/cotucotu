@@ -20,6 +20,7 @@ export default {
           window.localStorage.removeItem("userName");
         }
         this.$store.dispatch("logout");
+        this.$store.dispatch("todos/allDelete");
         this.$router.push("/");
       }
     }

@@ -11,10 +11,11 @@
           <div class="todo_middle">
             <p class="todo_title">{{ todo.title }}</p>
             <p class="todo_text">
-              Total: <span class="todo_total">{{ todo.total }}</span>
+              Total:
+              <span class="todo_total">{{ todo.total }}</span>
             </p>
           </div>
-          <button class="todo_up" @click="upTotal">UP</button>
+          <button class="todo_up" @click="upTotal(index)">UP</button>
         </div>
         <div class="todo_more">
           <p class="todo_more_text">More</p>
@@ -27,7 +28,7 @@
       </div>
     </div>
 
-    <button type="button" class="cotucotu-btn add-btn" @click="addTodo">
+    <nuxt-link to="/create" class="cotucotu-btn add-btn">
       <svg
         aria-hidden="true"
         focusable="false"
@@ -43,23 +44,23 @@
           d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
         ></path>
       </svg>
-    </button>
+    </nuxt-link>
   </div>
 </template>
 
 <script>
 export default {
   middleware: ["authenticated"],
+
   created() {
     const userId = this.$store.getters.getUserUid;
     this.$store.dispatch("todos/fetchTodos", userId);
   },
   methods: {
-    addTodo() {
-      console.log("hello");
-    },
-    upTotal() {
-      
+    upTotal(index) {
+      const userId = this.$store.getters.getUserUid;
+      this.$store.dispatch("todos/upTotal", { userId, index });
+      this.$store.dispatch("todos/addDate", { userId, index });
     }
   },
   computed: {
@@ -116,6 +117,7 @@ export default {
     font-weight: bold;
     font-size: 1.3rem;
     font-style: normal;
+    transition: opacity 0.5s;
   }
   &_up {
     display: inline-block;

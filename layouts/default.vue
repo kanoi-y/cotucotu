@@ -55,6 +55,17 @@ button {
   appearance: none;
 }
 
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font: inherit;
+  outline: none;
+}
+
 p,
 small,
 h1,
@@ -79,6 +90,10 @@ li {
     height: 20px;
     margin-right: 0.4em;
   }
+}
+
+.hidden {
+  opacity: 0;
 }
 </style>
 

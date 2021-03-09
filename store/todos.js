@@ -9,38 +9,69 @@ export const state = () => ({
 export const mutations = {
   addTodo(state, todo) {
     state.todos.push(todo);
+  },
+  upTotal(state, index) {
+    state.todos[index].total++;
+  },
+  addDate(state, { index, today }) {
+    state.todos[index].dates.push(today)
+  },
+  allDelete(state) {
+    state.todos = [];
   }
 };
 
 export const actions = {
   fetchTodos({ commit }, userUid) {
+    commit("allDelete");
     todoRef
       .doc(userUid)
+      .collection("subTodos")
       .get()
       .then(res => {
-        if (res.data() === undefined) return;
-        res.data().todos.forEach(doc => {
-          commit("addTodo", doc);
+        // console.log(res.data());
+        res.forEach(doc => {
+          // console.log(doc.data());
+          commit("addTodo", doc.data());
         });
       })
       .catch(error => {
         console.log("error : " + error);
       });
   },
-  upTotal({ commit }, userId, index) {
-    // console.log(todo);
-    // todoRef
-    //   .doc(userId)
-    //   .update({
-    //       "todos[].total": firebase.firestore.FieldValue.increment(1),
-    //   })
-    //   .then(function(docRef) {
-    //     console.log("Document written with ID: ", docRef.id);
-    //     commit("addTodo", todo);
-    //   })
-    //   .catch(function(error) {
-    //     console.error("Error adding document: ", error);
-    //   });
+  upTotal({ commit }, { userId, index }) {
+    todoRef
+      .doc(userId)
+      .collection("subTodos")
+      .doc(String(index + 1))
+      .update({
+        total: firebase.firestore.FieldValue.increment(1)
+      })
+      .then(docref => {
+        commit("upTotal", index);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  addDate({ commit }, { userId, index }) {
+    const today = firebase.firestore.Timestamp.fromDate(new Date());
+    todoRef
+    .doc(userId)
+    .collection("subTodos")
+    .doc(String(index + 1))
+    .update({
+      dates: firebase.firestore.FieldValue.arrayUnion(today)
+    })
+    .then(docref => {
+      commit("addDate", { index, today});
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
+  allDelete({ commit }) {
+    commit("allDelete");
   }
 };
 
