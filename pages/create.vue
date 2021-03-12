@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h1 class="title">ー 新規追加 ー</h1>
     <div class="create">
-      <div class="create_icon_wrap">
+      <div id="icon_cont" class="create_icon_wrap">
         <div class="create_icon_cont">
           <font-awesome-icon icon="book" class="create_icon" />
           <font-awesome-icon icon="running" class="create_icon" />
@@ -32,7 +32,40 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      scrollPosition: 0
+    };
+  },
+  mounted() {
+    const iconCont = document.getElementById("icon_cont");
+    iconCont.addEventListener("scroll", this.fitScroll);
+    this.fitScroll();
+  },
+  methods: {
+    fitScroll() {
+      const iconCont = document.getElementById("icon_cont");
+      const iconBetween = window.innerWidth / 2;
+      const difference =  iconCont.scrollLeft % iconBetween;
+      let direction;
+      if (this.scrollPosition < iconCont.scrollLeft) {
+        direction = 1;
+      } else {
+        direction = 0;
+      }
+
+      if (direction === 1) {
+        iconCont.scrollLeft = iconCont.scrollLeft - difference + iconBetween;
+        }
+      if (direction === 0) {
+        iconCont.scrollLeft = iconCont.scrollLeft - difference;
+      }
+        this.scrollPosition = iconCont.scrollLeft;
+      console.log(direction);
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
