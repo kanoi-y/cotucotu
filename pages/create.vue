@@ -4,25 +4,23 @@
     <div class="create">
       <div id="icon_cont" class="create_icon_wrap">
         <div class="create_icon_cont">
-          <font-awesome-icon icon="book" class="create_icon" />
-          <font-awesome-icon icon="running" class="create_icon" />
-          <font-awesome-icon icon="dumbbell" class="create_icon" />
-          <font-awesome-icon icon="pen" class="create_icon" />
-          <font-awesome-icon icon="laptop-code" class="create_icon" />
-          <font-awesome-icon icon="music" class="create_icon" />
-          <font-awesome-icon icon="car" class="create_icon" />
-          <font-awesome-icon icon="palette" class="create_icon" />
-          <font-awesome-icon icon="photo-video" class="create_icon" />
-          <font-awesome-icon icon="seedling" class="create_icon" />
-          <font-awesome-icon icon="utensils" class="create_icon" />
+          <font-awesome-icon
+            v-for="n in iconArray.length"
+            :key="n"
+            :style="{ color: colorArray[nowColor].code }"
+            class="create_icon"
+            :icon="iconArray[n - 1]"
+          />
         </div>
       </div>
       <div class="create_color_wrap">
-        <div class="create_color pink"></div>
-        <div class="create_color purple"></div>
-        <div class="create_color blue"></div>
-        <div class="create_color green"></div>
-        <div class="create_color yellow"></div>
+        <div
+          v-for="n in colorArray.length"
+          :key="n"
+          @click="changeColor(n)"
+          class="create_color"
+          :class="[colorArray[n - 1].name, { selected: n - 1 === nowColor}]"
+        ></div>
       </div>
       <div class="create_todo">
         <input class="create_text" type="text" placeholder="することを入力" />
@@ -35,7 +33,29 @@
 export default {
   data() {
     return {
-      scrollPosition: 0
+      timeoutId: null,
+      iconArray: [
+        "book",
+        "running",
+        "dumbbell",
+        "pen",
+        "laptop-code",
+        "music",
+        "car",
+        "palette",
+        "photo-video",
+        "seedling",
+        "utensils"
+      ],
+      nowIcon: 0,
+      colorArray: [
+        { name: "pink", code: "#ffa8a8" },
+        { name: "purple", code: "#f1a8ff" },
+        { name: "blue", code: "#a8ffe9" },
+        { name: "green", code: "#bbffa8" },
+        { name: "yellow", code: "#ffe8a8" }
+      ],
+      nowColor: 0
     };
   },
   mounted() {
@@ -47,23 +67,22 @@ export default {
     fitScroll() {
       const iconCont = document.getElementById("icon_cont");
       const iconBetween = window.innerWidth / 2;
-      const difference =  iconCont.scrollLeft % iconBetween;
-      let direction;
-      if (this.scrollPosition < iconCont.scrollLeft) {
-        direction = 1;
-      } else {
-        direction = 0;
-      }
+      const difference = iconCont.scrollLeft % iconBetween;
 
-      if (direction === 1) {
-        iconCont.scrollLeft = iconCont.scrollLeft - difference + iconBetween;
+      clearTimeout(this.timeoutId);
+
+      this.timeoutId = setTimeout(() => {
+        if (difference >= iconBetween / 2) {
+          iconCont.scrollLeft = iconCont.scrollLeft - difference + iconBetween;
+        } else {
+          iconCont.scrollLeft = iconCont.scrollLeft - difference;
         }
-      if (direction === 0) {
-        iconCont.scrollLeft = iconCont.scrollLeft - difference;
-      }
-        this.scrollPosition = iconCont.scrollLeft;
-      console.log(direction);
-    }
+
+        this.nowIcon = Math.round(iconCont.scrollLeft / iconBetween);
+        console.log(this.nowIcon);
+      }, 500);
+    },
+    changeColor(n) {}
   }
 };
 </script>
@@ -83,7 +102,7 @@ $icon-width: 70px;
 .create {
   padding-top: 20px;
   &_icon_wrap {
-    padding: 28px 0;
+    padding: 28px 0 40px;
     overflow: scroll;
     width: 100%;
   }
@@ -122,26 +141,42 @@ $icon-width: 70px;
     height: 40px;
     border-radius: 6px;
     cursor: pointer;
+    border: 2px solid transparent;
   }
 }
 
 .pink {
   background-color: #ffa8a8;
+  &.selected {
+    border: 2px solid #ff3c3c;
+  }
 }
 
 .purple {
   background-color: #f1a8ff;
+  &.selected {
+    border: 2px solid #de3cff;
+  }
 }
 
 .blue {
   background-color: #a8ffe9;
+  &.selected {
+    border: 2px solid #20ffc7;
+  }
 }
 
 .green {
   background-color: #bbffa8;
+  &.selected {
+    border: 2px solid #49ff16;
+  }
 }
 
 .yellow {
   background-color: #ffe8a8;
+  &.selected {
+    border: 2px solid #ffbf0d;
+  }
 }
 </style>
