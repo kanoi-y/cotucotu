@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <h1 class="title">ー 新規作成 ー</h1>
+    <TitleField :title="title" />
     <div class="create">
       <div id="icon_cont" class="create_icon_wrap">
         <div class="create_icon_cont">
@@ -38,8 +38,14 @@
 </template>
 
 <script>
+import TitleField from "~/components/TitleField.vue"
+
 export default {
   middleware: ["authenticated"],
+  layout: "page",
+  components: {
+    TitleField,
+  },
   data() {
     return {
       timeoutId: null,
@@ -65,7 +71,8 @@ export default {
         { name: "yellow", code: "#ffe8a8" }
       ],
       nowColor: 0,
-      text: ""
+      text: "",
+      title: "新規作成",
     };
   },
   mounted() {
@@ -95,6 +102,10 @@ export default {
       this.nowColor = n - 1;
     },
     createTodo() {
+      if (!this.text) {
+        alert("することが入力されていないよ！");
+        return;
+      }
       const userId = this.$store.getters.getUserUid;
       const todo = {
         color: this.colorArray[this.nowColor].code,
@@ -102,9 +113,6 @@ export default {
         title: this.text
       };
       this.$store.dispatch("todos/addTodo", { userId, todo });
-      // .then(res => {
-      //   this.$router.push("/home");
-      // });
     }
   }
 };
@@ -114,12 +122,8 @@ export default {
 $icon-width: 70px;
 
 .wrapper {
-  padding: 30px 0;
+  padding: 0;
   text-align: center;
-}
-
-.title {
-  font-size: 1.6rem;
 }
 
 .create {

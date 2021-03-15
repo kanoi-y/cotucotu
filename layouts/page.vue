@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <CommonHeader></CommonHeader>
     <div class="main">
       <Nuxt />
     </div>
@@ -11,14 +10,6 @@
 </template>
 
 <script>
-import CommonHeader from "~/components/Header.vue";
-
-export default {
-  name: "default",
-  components: {
-    CommonHeader
-  }
-};
 </script>
 
 <style lang="scss">

@@ -18,12 +18,14 @@
           <button class="todo_up" @click="upTotal(index)">UP</button>
         </div>
         <div class="todo_more">
+          <nuxt-link :to="`/edit/${index + 1}`">
           <p class="todo_more_text">More</p>
           <img
             class="todo_more_arrow"
             src="~/assets/images/ifn0772.svg"
             alt=""
           />
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -51,6 +53,7 @@
 <script>
 export default {
   middleware: ["authenticated"],
+  layout: "default",
 
   created() {
     const userId = this.$store.getters.getUserUid;
@@ -143,7 +146,6 @@ export default {
   }
 
   &_more {
-    position: relative;
     flex: 0 0 50px;
     text-align: left;
     cursor: pointer;

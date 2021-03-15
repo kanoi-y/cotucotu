@@ -53,7 +53,8 @@ export default {
           "faPalette",
           "faPhotoVideo",
           "faSeedling",
-          "faUtensils"
+          "faUtensils",
+          "faLongArrowAltLeft"
         ]
       }
     ]
