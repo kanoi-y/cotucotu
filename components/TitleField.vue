@@ -18,6 +18,7 @@ export default {
 <style lang="scss" scoped>
 .title-field {
   padding: 0.5em 1em;
+  padding-left: calc(18px + 25px);
   border-bottom: 1px solid $text-color;
   position: relative;
   .back {
@@ -36,7 +37,8 @@ export default {
     }
   }
   .title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    text-align: center;
   }
 }
 </style>

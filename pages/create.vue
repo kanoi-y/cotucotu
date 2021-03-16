@@ -72,7 +72,7 @@ export default {
       ],
       nowColor: 0,
       text: "",
-      title: "新規作成",
+      title: "新規追加"
     };
   },
   mounted() {

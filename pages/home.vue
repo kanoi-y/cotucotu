@@ -18,7 +18,7 @@
           <button class="todo_up" @click="upTotal(index)">UP</button>
         </div>
         <div class="todo_more">
-          <nuxt-link :to="`/edit/${index + 1}`">
+          <nuxt-link :to="`/edit/${index}`">
           <p class="todo_more_text">More</p>
           <img
             class="todo_more_arrow"
