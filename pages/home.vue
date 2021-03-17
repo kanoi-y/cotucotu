@@ -2,29 +2,34 @@
   <div class="wrapper">
     <div class="wrap-todos">
       <div class="todo" v-for="(todo, index) in todos" :key="index">
-        <div class="todo_content">
-          <font-awesome-icon
-            :icon="todo.icon"
-            class="todo_icon"
-            :style="{ color: todo.color }"
-          />
-          <div class="todo_middle">
-            <p class="todo_title">{{ todo.title }}</p>
-            <p class="todo_text">
-              Total:
-              <span class="todo_total">{{ todo.total }}</span>
-            </p>
+        <div class="todo_main" @click="goEdit(index)">
+          <div class="todo_edit">
+            <p class="todo_edit_text">Edit</p>
           </div>
-          <button class="todo_up" @click="upTotal(index)">UP</button>
+          <div class="todo_content">
+            <font-awesome-icon
+              :icon="todo.icon"
+              class="todo_icon"
+              :style="{ color: todo.color }"
+            />
+            <div class="todo_middle">
+              <p class="todo_title">{{ todo.title }}</p>
+              <p class="todo_text">
+                Total:
+                <span class="todo_total">{{ todo.total }}</span>
+              </p>
+            </div>
+            <button class="todo_up" @click.stop="upTotal(index)">UP</button>
+          </div>
         </div>
         <div class="todo_more">
-          <nuxt-link :to="`/edit/${index}`">
-          <p class="todo_more_text">More</p>
-          <img
-            class="todo_more_arrow"
-            src="~/assets/images/ifn0772.svg"
-            alt=""
-          />
+          <nuxt-link :to="`/record/${index}`">
+            <p class="todo_more_text">More</p>
+            <img
+              class="todo_more_arrow"
+              src="~/assets/images/ifn0772.svg"
+              alt=""
+            />
           </nuxt-link>
         </div>
       </div>
@@ -64,6 +69,9 @@ export default {
       const userId = this.$store.getters.getUserUid;
       this.$store.dispatch("todos/upTotal", { userId, index });
       this.$store.dispatch("todos/addDate", { userId, index });
+    },
+    goEdit(index) {
+      this.$router.push(`edit/${index}`);
     }
   },
   computed: {
@@ -76,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  padding: 30px 12px 0;
+  padding: 30px 12px;
   text-align: center;
 }
 
@@ -85,18 +93,31 @@ export default {
 }
 
 .todo {
-  padding: 15px 0;
+  padding: 15px 0 30px;
   display: flex;
   align-items: center;
+  &_main {
+    flex: 1;
+    margin-right: 20px;
+  }
   &_content {
     display: flex;
     align-items: center;
     background-color: #fff;
     border-radius: 8px;
-    flex: 1;
     padding: 0.6em 0.8em;
-    margin-right: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  }
+  &_edit {
+    width: fit-content;
+    margin-left: 8px;
+    background-color: $highlight-color;
+    border-radius: 8px 8px 0 0;
+    padding: 0.2em 0.7em;
+    &_text {
+      color: #fff;
+      font-size: 1rem;
+    }
   }
   &_icon {
     flex: 0 0 30px;
@@ -133,6 +154,7 @@ export default {
     border-radius: 50%;
     text-align: center;
     font-weight: bold;
+    font-size: 0.9rem;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
     border-bottom: solid 3px #fadf7d;

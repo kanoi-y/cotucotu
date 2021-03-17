@@ -38,7 +38,8 @@ export default {
   }
   .title {
     font-size: 1.4rem;
-    text-align: center;
+    text-align: left;
+    padding-left: 16px;
   }
 }
 </style>
