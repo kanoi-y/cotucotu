@@ -54,7 +54,9 @@ export default {
           "faPhotoVideo",
           "faSeedling",
           "faUtensils",
-          "faLongArrowAltLeft"
+          "faLongArrowAltLeft",
+          "faChevronLeft",
+          "faChevronRight"
         ]
       }
     ]
