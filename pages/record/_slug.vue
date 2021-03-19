@@ -2,7 +2,7 @@
   <div class="wrapper">
     <TitleField :title="title" />
     <div class="record">
-      <Calender />
+      <Calender class="record_calender" />
     </div>
   </div>
 </template>
@@ -20,8 +20,7 @@ export default {
   },
   computed: {
     title() {
-      const todos = this.$store.getters["todos/getTodos"];
-      const todo = todos[this.$route.params.slug];
+      const todo = this.$store.getters["todos/getTodos"][this.$route.params.slug];
       return todo.title;
     }
   }
@@ -32,5 +31,8 @@ export default {
 .record { 
   padding: 30px 12px;
   text-align: center;
+  &_calender {
+    margin: 0 auto;
+  }
 }
 </style>
