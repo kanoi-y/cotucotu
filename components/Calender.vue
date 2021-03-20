@@ -20,16 +20,28 @@
       <div class="calender_oneWeek calender_oneWeek6">Fri</div>
       <div class="calender_oneWeek calender_oneWeek7">Sat</div>
     </div>
+
     <div class="calender_body">
       <div
         v-for="(day, index) in days"
         :key="index"
         class="calender_day"
         :class="{ disabled: day.disable }"
-        :style="{ backgroundColor: backColor[0] }"
+        :style="{ backgroundColor: backColor[day.count] }"
       >
         <div class="calender_day_inner">{{ day.day }}</div>
       </div>
+    </div>
+
+    <div class="calender_figure">
+      <p class="calender_less">Less</p>
+      <div
+        v-for="n in 4"
+        :key="n"
+        class="calender_color"
+        :style="{ backgroundColor: backColor[n - 1] }"
+      ></div>
+      <p class="calender_more">More</p>
     </div>
   </div>
 </template>
@@ -43,7 +55,7 @@ export default {
       title: "",
       days: [],
       todo: [],
-      backColor: ["#FFF", "#fcfbba", "#fffd7acc", "#fffb00"]
+      backColor: ["#FFF", "#fcfbba", "#fffc60cc", "#fffb00"]
     };
   },
   created() {
@@ -74,28 +86,37 @@ export default {
 
       for (let i = 0; i < startDay; i++) {
         const day = lastDay - startDay + i + 1;
-        this.days.push({ day, disable: true });
+        this.days.push({ day, disable: true, count: 0 });
       }
 
       for (let i = 0; i < endDay; i++) {
-        this.days.push({ day: i + 1, disable: false });
+        this.days.push({ day: i + 1, disable: false, count: 0 });
       }
 
       for (let i = 0; i < 6 - endDayOfWeek; i++) {
-        this.days.push({ day: i + 1, disable: true });
+        this.days.push({ day: i + 1, disable: true, count: 0 });
       }
 
       this.todo.dates.forEach(date => {
-
         const dayDate = dayjs(date.toDate());
-        const thisYear = now.diff(dayDate, "year");
-        const thisMonth = now.diff(dayDate, "month");
 
-        const thisDay = dayDate.format("DD");
+        const thisYear = now
+          .startOf("year")
+          .diff(dayDate.startOf("year"), "year");
+
+        const thisMonth = now
+          .startOf("month")
+          .diff(dayDate.startOf("month"), "month");
+
+        const thisDay = dayDate.format("D");
 
         if (thisYear === 0 && thisMonth === 0) {
-          const filterDays = this.days.filter((day) => String(day.day) === thisDay);
-          console.log(filterDays);
+          this.days.forEach(day => {
+            if (String(day.day) === String(thisDay) && day.disable === false) {
+              if (day.count === 3) return;
+              day.count++;
+            }
+          });
         }
       });
 
@@ -147,6 +168,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 8px;
+    margin-bottom: 12px;
   }
   &_day {
     width: 100%;
@@ -164,17 +186,21 @@ export default {
       -ms-transform: translateY(-50%);
       font-weight: bold;
     }
-    &.row {
-      background-color: #fcfbba;
-    }
-    &.middle {
-      background-color: #fffd7acc;
-    }
-    &.high {
-      background-color: #fffb00;
-    }
     &.disabled {
       opacity: 0.3;
+    }
+  }
+  &_figure {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &_color {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    &:first-of-type {
+      margin-left: 6px;
     }
   }
 }

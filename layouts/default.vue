@@ -107,5 +107,6 @@ li {
 
 footer {
   margin-top: auto;
+  text-align: center;
 }
 </style>
