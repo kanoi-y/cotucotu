@@ -12,11 +12,11 @@
 
     <div class="record">
       <div class="record_top">
-        <div class="record_arrow">
+        <div class="record_arrow" @click="changeMonth(-1)">
           <font-awesome-icon class="record_arrow_icon" icon="chevron-left" />
         </div>
-        <h2 class="record_title">2021/3</h2>
-        <div class="record_arrow">
+        <h2 class="record_title">{{ title }}</h2>
+        <div class="record_arrow" @click="changeMonth(1)">
           <font-awesome-icon class="record_arrow_icon" icon="chevron-right" />
         </div>
       </div>
@@ -27,13 +27,13 @@
           <div class="record_space"></div>
         </div>
 
-        <div class="record_content">
-          <p class="record_content_date">2021/3/5</p>
-          <span class="record_content_count">1</span>
+        <div class="record_content" v-for="(day, index) in days" :key="index">
+          <p class="record_content_date">{{ day.date }}</p>
+          <span class="record_content_count">{{ day.count }}</span>
           <button class="record_content_cross">×</button>
         </div>
 
-        <div class="record_content">
+        <!-- <div class="record_content">
           <p class="record_content_date">2021/3/12</p>
           <span class="record_content_count">1</span>
           <button class="record_content_cross">×</button>
@@ -43,7 +43,7 @@
           <p class="record_content_date">2021/3/18</p>
           <span class="record_content_count">2</span>
           <button class="record_content_cross">×</button>
-        </div>
+        </div> -->
 
         <button class="cotucotu-btn record_button">
           <svg
@@ -70,6 +70,7 @@
 <script>
 import TitleField from "~/components/TitleField.vue";
 import SelectTodo from "~/components/SelectTodo.vue";
+import dayjs from "dayjs";
 
 export default {
   middleware: ["authenticated"],
@@ -96,13 +97,58 @@ export default {
       nowIcon: 0,
       colorArray: ["#ffa8a8", "#f1a8ff", "#a8ffe9", "#bbffa8", "#ffe8a8"],
       nowColor: 0,
-      text: ""
+      text: "",
+      title: "",
+      days: []
     };
   },
   mounted() {
     this.nowIcon = this.iconArray.indexOf(this.todo.icon);
     this.nowColor = this.colorArray.indexOf(this.todo.color);
     this.text = this.todo.title;
+
+    const now = dayjs();
+    this.createCalender(now);
+  },
+  methods: {
+    changeMonth(n) {
+      const oldDay = dayjs(`${this.title}`);
+      const newDay = oldDay.add(n, "month");
+
+      this.createCalender(newDay);
+    },
+    createCalender(now) {
+      this.days = [];
+
+      this.todo.dates.forEach(date => {
+        let todoArray = [];
+
+        const dayDate = dayjs(date.toDate());
+        if (
+          dayDate.format("YYYY") === now.format("YYYY") &&
+          dayDate.format("MM") === now.format("MM")
+        ) {
+
+          todoArray = this.days.filter(
+            data => data.date === dayDate.format("YYYY/MM/DD")
+          );
+
+          if (todoArray.length === 0) {
+            this.days.push({ date: dayDate.format("YYYY/MM/DD"), count: 1 });
+          } else {
+
+            this.days.forEach(day => {
+              if (day.date === dayDate.format("YYYY/MM/DD")) {
+                day.count++;
+              }
+            });
+          }
+
+        }
+      });
+
+      this.title = now.format("YYYY/MM");
+    }
   },
   computed: {
     todo() {
@@ -133,6 +179,8 @@ export default {
     &_icon {
       width: 16px;
       height: auto;
+      display: block;
+      margin: 0 auto;
     }
   }
   &_title {
