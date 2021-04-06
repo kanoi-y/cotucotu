@@ -30,22 +30,12 @@
         <div class="record_content" v-for="(day, index) in days" :key="index">
           <p class="record_content_date">{{ day.date }}</p>
           <span class="record_content_count">{{ day.count }}</span>
-          <button class="record_content_cross">×</button>
+          <button class="record_content_cross" @click="deleteTodo(day.date)">
+            ×
+          </button>
         </div>
 
-        <!-- <div class="record_content">
-          <p class="record_content_date">2021/3/12</p>
-          <span class="record_content_count">1</span>
-          <button class="record_content_cross">×</button>
-        </div>
-
-        <div class="record_content">
-          <p class="record_content_date">2021/3/18</p>
-          <span class="record_content_count">2</span>
-          <button class="record_content_cross">×</button>
-        </div> -->
-
-        <button class="cotucotu-btn record_button">
+        <button class="cotucotu-btn record_button" @click="openModel">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -63,6 +53,48 @@
           </svg>
         </button>
       </div>
+
+      <div class="record_model" v-show="modelFlag">
+        <div class="record_model_inner">
+          <label class="record_model_label" for="model_date">日付</label>
+          <input
+            class="record_model_input"
+            type="date"
+            id="model_date"
+            v-model="newDate"
+          />
+          <label class="record_model_label" for="model_count">回数</label>
+          <input
+            class="record_model_input"
+            type="number"
+            id="model_count"
+            placeholder="1"
+            v-model="newCount"
+          />
+
+          <div class="record_model_buttons">
+            <button
+              class="cotucotu-btn record_model_add"
+              @click="addTodo"
+              :style="{ opacity: modelButton.opacity }"
+              :disabled="modelButton.disable"
+            >
+              追加
+            </button>
+            <button
+              class="cotucotu-btn record_model_cancel"
+              @click="closeModel"
+            >
+              キャンセル
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit_buttons">
+      <button class="cotucotu-btn edit_deleteButton">削 除</button>
+      <button class="cotucotu-btn edit_updateButton">変更を保存する</button>
     </div>
   </div>
 </template>
@@ -99,36 +131,50 @@ export default {
       nowColor: 0,
       text: "",
       title: "",
-      days: []
+      days: [],
+      dates: [],
+      modelFlag: false,
+      newDate: "",
+      newCount: ""
     };
   },
   mounted() {
+    // todoの情報からアイコンとカラーとタイトルをデータにコピー
     this.nowIcon = this.iconArray.indexOf(this.todo.icon);
     this.nowColor = this.colorArray.indexOf(this.todo.color);
     this.text = this.todo.title;
 
+    // datesをtoDate()化してからデータの配列にコピー
+    this.todo.dates.forEach(date => {
+      this.dates.push(date.toDate());
+    });
+
+    // 今日の日付でrecordを作成
     const now = dayjs();
     this.createCalender(now);
   },
   methods: {
+    // 月を変更したときの処理
     changeMonth(n) {
       const oldDay = dayjs(`${this.title}`);
       const newDay = oldDay.add(n, "month");
 
       this.createCalender(newDay);
     },
+
+    // 入力された日時に基づいたrecordを作成
     createCalender(now) {
       this.days = [];
 
-      this.todo.dates.forEach(date => {
+      this.dates.forEach(date => {
         let todoArray = [];
 
-        const dayDate = dayjs(date.toDate());
+        const dayDate = dayjs(date);
+
         if (
           dayDate.format("YYYY") === now.format("YYYY") &&
           dayDate.format("MM") === now.format("MM")
         ) {
-
           todoArray = this.days.filter(
             data => data.date === dayDate.format("YYYY/MM/DD")
           );
@@ -136,25 +182,76 @@ export default {
           if (todoArray.length === 0) {
             this.days.push({ date: dayDate.format("YYYY/MM/DD"), count: 1 });
           } else {
-
             this.days.forEach(day => {
               if (day.date === dayDate.format("YYYY/MM/DD")) {
                 day.count++;
               }
             });
           }
-
         }
       });
 
       this.title = now.format("YYYY/MM");
+    },
+
+    // todoをdatesから削除する
+    deleteTodo(date) {
+      this.dates = this.dates.filter(dat => {
+        const dayDate = dayjs(dat);
+
+        if (dayDate.format("YYYY/MM/DD") !== date) {
+          return dat;
+        }
+      });
+      const now = dayjs(`${this.title}`);
+      this.createCalender(now);
+    },
+
+    // todoをdatesに増やす
+    addTodo() {
+
+      for (let i = 0; i < this.newCount; i++) {
+        this.dates.push(new Date(this.newDate));
+      }
+
+      this.dates.sort((a, b) => new Date(a) - new Date(b));
+      const now = dayjs(`${this.title}`);
+      this.createCalender(now);
+      this.closeModel();
+
+      this.newDate = "";
+      this.newCount = "";
+    },
+
+    // モーダルを開く
+    openModel() {
+      this.modelFlag = true;
+    },
+
+    // モーダルを閉じる
+    closeModel() {
+      this.modelFlag = false;
     }
   },
   computed: {
+    // このページのtodoを取得する処理
     todo() {
       const todos = this.$store.getters["todos/getTodos"];
       const todo = todos[this.$route.params.slug];
       return todo;
+    },
+
+    modelButton() {
+      if (
+        !this.newCount ||
+        !this.newDate ||
+        this.newCount === "0" ||
+        Number(this.newCount) < 0
+      ) {
+        return { opacity: 0.6, disable: true };
+      } else {
+        return { opacity: 1, disable: false };
+      }
     }
   }
 };
@@ -163,11 +260,19 @@ export default {
 <style lang="scss" scoped>
 .edit {
   padding-bottom: 30px;
+  &_buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+  &_deleteButton {
+    background-color: #ffa8a8;
+  }
 }
 .record {
   padding: 10px 12px;
   padding-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  position: relative;
   &_top {
     display: flex;
     align-items: center;
@@ -238,6 +343,52 @@ export default {
     width: 65px;
     margin-top: 12px;
     margin-right: 12px;
+  }
+  &_model {
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    &_inner {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 8px;
+    }
+    &_label {
+      display: block;
+      color: $text-color;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    &_input {
+      display: block;
+      width: 270px;
+      padding: 0.3em 0.4em;
+      margin-bottom: 20px;
+      color: $text-color;
+      font-size: 1rem;
+      border-bottom: 1px solid $text-color;
+      &:last-of-type {
+        margin-bottom: 40px;
+      }
+    }
+    &_buttons {
+      display: flex;
+    }
+    &_add {
+      flex: 1;
+      margin-right: 25px;
+    }
+    &_cancel {
+      flex: 1;
+    }
   }
 }
 </style>
