@@ -10,11 +10,17 @@ export const mutations = {
   addTodo(state, todo) {
     state.todos.push(todo);
   },
+  updateTodo(state, { todo, index }) {
+    state.todos[index] = todo;
+  },
   upTotal(state, index) {
     state.todos[index].total++;
   },
   addDate(state, { index, today }) {
     state.todos[index].dates.push(today);
+  },
+  deleteTodo(state, index) {
+    state.todos.splice(index, 1);
   },
   allDelete(state) {
     state.todos = [];
@@ -29,9 +35,7 @@ export const actions = {
       .collection("subTodos")
       .get()
       .then(res => {
-        // console.log(res.data());
         res.forEach(doc => {
-          // console.log(doc.data());
           commit("addTodo", doc.data());
         });
       })
@@ -92,6 +96,45 @@ export const actions = {
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
+  },
+  updateTodo({ commit }, { userId, todo, index }) {
+    const number = Number(index) + 1;
+    todoRef
+      .doc(userId)
+      .collection("subTodos")
+      .doc(String(number))
+      .set({
+        color: todo.color,
+        dates: todo.dates,
+        icon: todo.icon,
+        title: todo.title,
+        total: todo.total
+      })
+      .then(docRef => {
+        console.log("成功");
+        commit("updateTodo", { todo, index });
+        window.location.href = "/home";
+      })
+      .catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+  },
+  deleteTodo({ commit }, { userId, index }) {
+    // console.log("hello");
+    const number = Number(index) + 1;
+    todoRef
+      .doc(userId)
+      .collection("subTodos")
+      .doc(String(number))
+      .delete()
+      .then(docRef => {
+        console.log("成功");
+        commit("deleteTodo", index);
+        window.location.href = "/home";
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
   allDelete({ commit }) {
     commit("allDelete");

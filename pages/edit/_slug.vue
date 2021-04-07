@@ -93,8 +93,10 @@
     </div>
 
     <div class="edit_buttons">
-      <button class="cotucotu-btn edit_deleteButton">削 除</button>
-      <button class="cotucotu-btn edit_updateButton">変更を保存する</button>
+      <button class="cotucotu-btn edit_deleteButton" @click="deleteTodoDB">削 除</button>
+      <button class="cotucotu-btn edit_updateButton" @click="updateTodoDB">
+        変更を保存する
+      </button>
     </div>
   </div>
 </template>
@@ -209,7 +211,6 @@ export default {
 
     // todoをdatesに増やす
     addTodo() {
-
       for (let i = 0; i < this.newCount; i++) {
         this.dates.push(new Date(this.newDate));
       }
@@ -223,6 +224,30 @@ export default {
       this.newCount = "";
     },
 
+    updateTodoDB() {
+      const userId = this.$store.getters.getUserUid;
+      const todo = {
+        color: this.colorArray[this.nowColor],
+        icon: this.iconArray[this.nowIcon],
+        title: this.text,
+        dates: this.dates,
+        total: this.dates.length
+      };
+
+      const index = this.$route.params.slug;
+      this.$store.dispatch("todos/updateTodo", { userId, todo, index });
+    },
+
+    deleteTodoDB() {
+      const userId = this.$store.getters.getUserUid;
+      const index = this.$route.params.slug;
+      
+      const result = window.confirm("本当に削除してもよろしいでしょうか？");
+
+      if (result) {
+        this.$store.dispatch("todos/deleteTodo", { userId, index });
+      }
+    },
     // モーダルを開く
     openModel() {
       this.modelFlag = true;
