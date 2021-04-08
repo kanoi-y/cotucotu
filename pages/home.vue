@@ -19,7 +19,7 @@
                 <span class="todo_total">{{ todo.total }}</span>
               </p>
             </div>
-            <button class="todo_up" @click.stop="upTotal(index)">UP</button>
+            <button class="todo_up" @click.stop="upTotal(todo.id)">UP</button>
           </div>
         </div>
         <div class="todo_more">
@@ -61,14 +61,15 @@ export default {
   layout: "default",
 
   created() {
+    if (this.$store.getters["todos/getTodos"].length !== 0) return;
     const userId = this.$store.getters.getUserUid;
     this.$store.dispatch("todos/fetchTodos", userId);
   },
   methods: {
-    upTotal(index) {
+    upTotal(documentId) {
       const userId = this.$store.getters.getUserUid;
-      this.$store.dispatch("todos/upTotal", { userId, index });
-      this.$store.dispatch("todos/addDate", { userId, index });
+      this.$store.dispatch("todos/upTotal", { userId, documentId });
+      this.$store.dispatch("todos/addDate", { userId, documentId });
     },
     goEdit(index) {
       this.$router.push(`edit/${index}`);

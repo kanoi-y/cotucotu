@@ -64,6 +64,7 @@ export default {
         icon: this.iconArray[this.nowIcon],
         title: this.text
       };
+      console.log(todo);
       this.$store.dispatch("todos/addTodo", { userId, todo });
     }
   }

@@ -148,7 +148,9 @@ export default {
 
     // datesをtoDate()化してからデータの配列にコピー
     this.todo.dates.forEach(date => {
-      this.dates.push(date.toDate());
+      console.log(new Date(date).getTime() );
+      const realDate = Number.isNaN(new Date(date).getTime()) ? date.toDate() : date;
+      this.dates.push(realDate);
     });
 
     // 今日の日付でrecordを作成
@@ -233,19 +235,19 @@ export default {
         dates: this.dates,
         total: this.dates.length
       };
-
-      const index = this.$route.params.slug;
-      this.$store.dispatch("todos/updateTodo", { userId, todo, index });
+      const documentId = this.todo.id;
+      this.$store.dispatch("todos/updateTodo", { userId, todo, documentId });
     },
 
     deleteTodoDB() {
       const userId = this.$store.getters.getUserUid;
       const index = this.$route.params.slug;
-      
+      const documentId = this.todo.id;
+ 
       const result = window.confirm("本当に削除してもよろしいでしょうか？");
 
       if (result) {
-        this.$store.dispatch("todos/deleteTodo", { userId, index });
+        this.$store.dispatch("todos/deleteTodo", { userId, documentId });
       }
     },
     // モーダルを開く

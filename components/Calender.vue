@@ -98,7 +98,8 @@ export default {
       }
 
       this.todo.dates.forEach(date => {
-        const dayDate = dayjs(date.toDate());
+        const realdate = Number.isNaN(new Date(date).getTime()) ? date.toDate() : date;
+        const dayDate = dayjs(realdate);
 
         const thisYear = now
           .startOf("year")

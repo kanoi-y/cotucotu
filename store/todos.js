@@ -10,17 +10,29 @@ export const mutations = {
   addTodo(state, todo) {
     state.todos.push(todo);
   },
-  updateTodo(state, { todo, index }) {
-    state.todos[index] = todo;
+  updateTodo(state, { todo, documentId }) {
+    state.todos.forEach((td, index) => {
+      if (td.id === documentId) {
+        console.log(td);
+        // td = {...todo, id: documentId };
+        // Vue.set(td, ...todo);
+        state.todos.splice(index, 1, {...todo, id: documentId });
+      }
+    });
   },
-  upTotal(state, index) {
-    state.todos[index].total++;
+  upTotal(state, documentId) {
+    state.todos.forEach(todo => {
+      if (todo.id === documentId) {
+        todo.total++;
+      }
+    });
   },
-  addDate(state, { index, today }) {
-    state.todos[index].dates.push(today);
-  },
-  deleteTodo(state, index) {
-    state.todos.splice(index, 1);
+  addDate(state, { documentId, today }) {
+    state.todos.forEach(todo => {
+      if (todo.id === documentId) {
+        todo.dates.push(today);
+      }
+    });
   },
   allDelete(state) {
     state.todos = [];
@@ -36,51 +48,50 @@ export const actions = {
       .get()
       .then(res => {
         res.forEach(doc => {
-          commit("addTodo", doc.data());
+          commit("addTodo", {...doc.data(), id: doc.id });
         });
       })
       .catch(error => {
         console.log("error : " + error);
       });
   },
-  upTotal({ commit }, { userId, index }) {
+  upTotal({ commit }, { userId, documentId }) {
     todoRef
       .doc(userId)
       .collection("subTodos")
-      .doc(String(index + 1))
+      .doc(documentId)
       .update({
         total: firebase.firestore.FieldValue.increment(1)
       })
       .then(docref => {
-        commit("upTotal", index);
+        commit("upTotal", documentId);
       })
       .catch(err => {
         console.log(err);
       });
   },
-  addDate({ commit }, { userId, index }) {
+  addDate({ commit }, { userId, documentId }) {
     const today = firebase.firestore.Timestamp.fromDate(new Date());
     todoRef
       .doc(userId)
       .collection("subTodos")
-      .doc(String(index + 1))
+      .doc(documentId)
       .update({
         dates: firebase.firestore.FieldValue.arrayUnion(today)
       })
       .then(docref => {
-        commit("addDate", { index, today });
+        commit("addDate", { documentId, today });
       })
       .catch(err => {
         console.log(err);
       });
   },
-  addTodo({ commit, state }, { userId, todo }) {
-    const number = state.todos.length + 1;
+  addTodo({ commit }, { userId, todo }) {
+    console.log(todo);
     todoRef
       .doc(userId)
       .collection("subTodos")
-      .doc(String(number))
-      .set({
+      .add({
         color: todo.color,
         dates: [],
         icon: todo.icon,
@@ -89,20 +100,20 @@ export const actions = {
       })
       .then(docRef => {
         console.log("成功");
-        const newTodo = { todo, dates: [], total: 0 };
-        commit("addTodo", newTodo);
+        // const newTodo = { todo, dates: [], total: 0 };
+        // commit("addTodo", newTodo);
+        // fetchTodos(userId);
         window.location.href = "/home";
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
   },
-  updateTodo({ commit }, { userId, todo, index }) {
-    const number = Number(index) + 1;
+  updateTodo({ commit }, { userId, todo, documentId }) {
     todoRef
       .doc(userId)
       .collection("subTodos")
-      .doc(String(number))
+      .doc(documentId)
       .set({
         color: todo.color,
         dates: todo.dates,
@@ -112,24 +123,21 @@ export const actions = {
       })
       .then(docRef => {
         console.log("成功");
-        commit("updateTodo", { todo, index });
-        window.location.href = "/home";
+        commit("updateTodo", { todo, documentId });
+        // window.location.href = "/home";
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
   },
-  deleteTodo({ commit }, { userId, index }) {
-    // console.log("hello");
-    const number = Number(index) + 1;
+  deleteTodo({ commit }, { userId, documentId }) {
     todoRef
       .doc(userId)
       .collection("subTodos")
-      .doc(String(number))
+      .doc(documentId)
       .delete()
       .then(docRef => {
         console.log("成功");
-        commit("deleteTodo", index);
         window.location.href = "/home";
       })
       .catch(err => {
