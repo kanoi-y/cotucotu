@@ -34,6 +34,9 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px 0;
+  @include tablet-size {
+    padding: 16px 24px 0;
+  }
   .logo {
     color: $text-color;
     font-size: 2rem;

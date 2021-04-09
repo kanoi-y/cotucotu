@@ -3,8 +3,8 @@
     <div class="main">
       <Nuxt />
     </div>
-    <footer>
-      <p>©2021 CotuCotu</p>
+    <footer class="footer">
+      <p class="footer_copyright">©2021 CotuCotu</p>
     </footer>
   </div>
 </template>

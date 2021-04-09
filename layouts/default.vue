@@ -4,8 +4,8 @@
     <div class="main">
       <Nuxt />
     </div>
-    <footer>
-      <p>©2021 CotuCotu</p>
+    <footer class="footer">
+      <p class="footer_copyright">©2021 CotuCotu</p>
     </footer>
   </div>
 </template>
@@ -33,6 +33,9 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   background-color: $back-color;
+  @include tablet-size {
+    font-size: 18px;
+  }
 }
 
 *,
@@ -75,6 +78,16 @@ li {
   color: $text-color;
 }
 
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 8px 0;
+  &_copyright {
+    font-weight: bold;
+    color: $text-color;
+  }
+}
+
 .cotucotu-btn {
   color: #fff;
   background-color: #f8e6a4;
@@ -86,6 +99,9 @@ li {
   font-size: 1.2rem;
   box-shadow: 0 2px 5px -2px #ffd91d40;
   font-weight: bold;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
   &_icon {
     width: 20px;
     height: 20px;
@@ -105,8 +121,5 @@ li {
   min-height: 100vh;
 }
 
-footer {
-  margin-top: auto;
-  text-align: center;
-}
+
 </style>

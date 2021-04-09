@@ -82,13 +82,21 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  padding: 30px 12px 0;
+  padding: 30px 12px;
   text-align: center;
+  @include tablet-size {
+    padding: 45px 24px;
+  }
 }
 
 .top-image {
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   margin-bottom: 12px;
+  @include tablet-size {
+    margin-bottom: 24px;
+  }
   img {
     width: 100%;
   }
@@ -97,7 +105,9 @@ export default {
 .top-title {
   font-size: 1rem;
   margin-bottom: 20px;
-
+  @include tablet-size {
+    margin-bottom: 40px;
+  }
   .highlight {
     font-size: 1.2rem;
   }

@@ -124,6 +124,7 @@ export const actions = {
       .then(docRef => {
         console.log("成功");
         commit("updateTodo", { todo, documentId });
+        alert("変更を保存しました！");
         // window.location.href = "/home";
       })
       .catch(function(error) {

@@ -87,6 +87,9 @@ export default {
 .wrapper {
   padding: 30px 12px;
   text-align: center;
+  @include tablet-size {
+    padding: 45px 24px;
+  }
 }
 
 .wrap-todos {
