@@ -87,6 +87,8 @@ export default {
 .wrapper {
   padding: 30px 12px;
   text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
   @include tablet-size {
     padding: 45px 24px;
   }
@@ -94,15 +96,25 @@ export default {
 
 .wrap-todos {
   padding-bottom: 30px;
+  @include tablet-size {
+    padding-bottom: 45px;
+  }
 }
 
 .todo {
   padding: 15px 0 30px;
   display: flex;
   align-items: center;
+  @include tablet-size {
+    padding: 25px 0 40px;
+  }
   &_main {
     flex: 1;
     margin-right: 20px;
+    cursor: pointer;
+    @include tablet-size {
+      margin-right: 40px;
+    }
   }
   &_content {
     display: flex;
@@ -127,6 +139,10 @@ export default {
     flex: 0 0 30px;
     height: auto;
     margin-right: 16px;
+    @include tablet-size {
+      flex: 0 0 40px;
+      margin-right: 26px;
+    }
   }
   &_middle {
     flex: 1;
@@ -136,6 +152,9 @@ export default {
     font-weight: bold;
     font-size: 1rem;
     margin-bottom: 12px;
+    @include tablet-size {
+      margin-bottom: 18px;
+    }
   }
   &_text {
     font-style: italic;
@@ -163,6 +182,11 @@ export default {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
     border-bottom: solid 3px #fadf7d;
     transition: 0.4s;
+    @include tablet-size {
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+    }
     &:active {
       -webkit-transform: translateY(2px);
       transform: translateY(2px);
@@ -175,8 +199,11 @@ export default {
     flex: 0 0 50px;
     text-align: left;
     cursor: pointer;
+    @include tablet-size {
+      flex: 0 0 60px;
+    }
     &_text {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-style: italic;
     }
     &_arrow {

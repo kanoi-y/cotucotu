@@ -21,6 +21,9 @@ export default {
   padding-left: calc(18px + 25px);
   border-bottom: 1px solid $text-color;
   position: relative;
+  @include tablet-size {
+    padding-left: calc(30px + 25px);
+  }
   .back {
     position: absolute;
     top: 50%;
@@ -31,6 +34,9 @@ export default {
     width: 25px;
     height: auto;
     color: $text-color;
+    @include tablet-size {
+      left: 30px;
+    }
     &_icon {
       width: 100%;
       height: auto;
@@ -40,6 +46,9 @@ export default {
     font-size: 1.4rem;
     text-align: left;
     padding-left: 16px;
+    @include tablet-size {
+    padding-left: 26px;
+  }
   }
 }
 </style>

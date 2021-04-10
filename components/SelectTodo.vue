@@ -108,7 +108,7 @@ export default {
       this.nowColor = n - 1;
       this.$emit("getNowColor", this.nowColor);
     },
-    sendText(){
+    sendText() {
       this.$emit("getText", this.text);
     }
   }
@@ -125,11 +125,23 @@ $icon-width: 70px;
 
 .selectTodo {
   padding-top: 20px;
+  overflow: hidden;
+  @include tablet-size {
+    padding-top: 40px;
+  }
   &_icon_wrap {
     padding: 28px 0;
     margin-bottom: 28px;
     overflow: scroll;
     width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    @include tablet-size {
+      margin-bottom: 40px;
+    }
   }
   &_icon_cont {
     padding-left: calc(50vw - #{$icon-width} / 2);
@@ -145,10 +157,14 @@ $icon-width: 70px;
   }
   &_todo {
     width: 80%;
+    max-width: 600px;
     margin: 0 auto;
     margin-bottom: 40px;
     padding: 0.5em 0;
     border-bottom: 1px solid $text-color;
+    @include tablet-size {
+      margin-bottom: 60px;
+    }
   }
   &_text {
     text-align: center;
@@ -158,9 +174,13 @@ $icon-width: 70px;
   &_color_wrap {
     width: 100%;
     padding: 10px 12px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     display: flex;
     justify-content: space-around;
+    @include tablet-size {
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
   }
   &_color {
     width: 40px;
@@ -168,6 +188,10 @@ $icon-width: 70px;
     border-radius: 6px;
     cursor: pointer;
     border: 2px solid transparent;
+    @include tablet-size {
+      width: 45px;
+      height: 45px;
+    }
   }
 }
 
@@ -205,5 +229,4 @@ $icon-width: 70px;
     border: 2px solid #ffbf0d;
   }
 }
-
 </style>
