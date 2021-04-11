@@ -98,7 +98,9 @@ export default {
       }
 
       this.todo.dates.forEach(date => {
-        const realdate = Number.isNaN(new Date(date).getTime()) ? date.toDate() : date;
+        const realdate = Number.isNaN(new Date(date).getTime())
+          ? date.toDate()
+          : date;
         const dayDate = dayjs(realdate);
 
         const thisYear = now
@@ -146,10 +148,17 @@ export default {
     row-gap: 24px;
     align-items: center;
     margin-bottom: 16px;
+    @include tablet-size {
+      row-gap: 34px;
+      margin-bottom: 26px;
+    }
   }
   &_arrow {
     width: 16px;
     height: auto;
+    @include tablet-size {
+      width: 18px;
+    }
   }
   &_left {
     grid-area: left;
@@ -170,6 +179,10 @@ export default {
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 8px;
     margin-bottom: 12px;
+    @include tablet-size {
+      grid-gap: 12px;
+      margin-bottom: 20px;
+    }
   }
   &_day {
     width: 100%;
@@ -200,8 +213,16 @@ export default {
     width: 16px;
     height: 16px;
     margin-right: 6px;
+    @include tablet-size {
+      width: 26px;
+      height: 26px;
+      margin-right: 12px;
+    }
     &:first-of-type {
       margin-left: 6px;
+      @include tablet-size {
+        margin-left: 12px;
+      }
     }
   }
 }
