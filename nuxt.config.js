@@ -5,25 +5,53 @@ export default {
   target: "static",
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "cotucotu",
+    title: "CotuCotu",
     htmlAttrs: {
-      lang: "ja"
+      lang: "ja",
+      prefix: "og: http://ogp.me/ns#"
     },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
+      },
+      {
+        hid: "og:site_name",
+        property: "og:site_name",
+        content: "CotuCotu"
+      },
+      { hid: "og:type", property: "og:type", content: "website" },
+      {
+        hid: "og:title",
+        property: "og:title",
+        content: "CotuCotu"
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content:
+          "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
+      },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: "/cotucotu_ogp.png"
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@kanoi_y" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/svg+xml", href: "/cotucotu_logo.svg" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/firebase.js'
-  ],
+  plugins: ["~/plugins/firebase.js"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

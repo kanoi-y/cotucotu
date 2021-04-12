@@ -38,7 +38,7 @@ export default {
   }
   &_calender {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 650px;
   }
 }
 </style>

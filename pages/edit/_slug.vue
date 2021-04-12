@@ -93,7 +93,9 @@
     </div>
 
     <div class="edit_buttons">
-      <button class="cotucotu-btn edit_deleteButton" @click="deleteTodoDB">削 除</button>
+      <button class="cotucotu-btn edit_deleteButton" @click="deleteTodoDB">
+        削 除
+      </button>
       <button class="cotucotu-btn edit_updateButton" @click="updateTodoDB">
         変更を保存する
       </button>
@@ -148,8 +150,10 @@ export default {
 
     // datesをtoDate()化してからデータの配列にコピー
     this.todo.dates.forEach(date => {
-      console.log(new Date(date).getTime() );
-      const realDate = Number.isNaN(new Date(date).getTime()) ? date.toDate() : date;
+      console.log(new Date(date).getTime());
+      const realDate = Number.isNaN(new Date(date).getTime())
+        ? date.toDate()
+        : date;
       this.dates.push(realDate);
     });
 
@@ -243,7 +247,7 @@ export default {
       const userId = this.$store.getters.getUserUid;
       const index = this.$route.params.slug;
       const documentId = this.todo.id;
- 
+
       const result = window.confirm("本当に削除してもよろしいでしょうか？");
 
       if (result) {
@@ -293,17 +297,27 @@ export default {
   }
   &_deleteButton {
     background-color: #ffa8a8;
+    width: fit-content;
+  }
+  &_updateButton {
+    width: fit-content;
   }
 }
 .record {
-  padding: 10px 12px;
-  padding-top: 30px;
-  margin-bottom: 50px;
+  padding: 30px 12px 50px;
   position: relative;
+  max-width: 650px;
+  margin: 0 auto;
+  @include tablet-size {
+    padding: 40px 24px 60px;
+  }
   &_top {
     display: flex;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    @include tablet-size {
+      margin-bottom: 48px;
+    }
   }
   &_arrow {
     flex: 1;
@@ -313,6 +327,9 @@ export default {
       height: auto;
       display: block;
       margin: 0 auto;
+      @include tablet-size {
+        width: 18px;
+      }
     }
   }
   &_title {
@@ -323,11 +340,17 @@ export default {
   &_data {
     text-align: right;
     padding-bottom: 12px;
+    @include tablet-size {
+      padding-bottom: 24px;
+    }
   }
   &_head {
     display: flex;
     border-bottom: 2px solid $text-color;
     margin-bottom: 20px;
+    @include tablet-size {
+      padding-bottom: 40px;
+    }
   }
   &_date {
     flex: 5;
@@ -348,6 +371,9 @@ export default {
     margin-bottom: 12px;
     padding: 0.4em;
     border-radius: 8px;
+    @include tablet-size {
+      margin-bottom: 24px;
+    }
     &_date {
       flex: 5;
       font-weight: bold;
@@ -370,6 +396,10 @@ export default {
     width: 65px;
     margin-top: 12px;
     margin-right: 12px;
+    @include tablet-size {
+      margin-top: 24px;
+      margin-right: 24px;
+    }
   }
   &_model {
     position: fixed;
@@ -385,7 +415,12 @@ export default {
     &_inner {
       background-color: #fff;
       padding: 25px;
+      width: 90%;
+      max-width: 550px;
       border-radius: 8px;
+      @include tablet-size {
+        padding: 40px;
+      }
     }
     &_label {
       display: block;
@@ -393,17 +428,26 @@ export default {
       font-size: 1.3rem;
       font-weight: bold;
       margin-bottom: 8px;
+      @include tablet-size {
+        margin-bottom: 12px;
+      }
     }
     &_input {
       display: block;
-      width: 270px;
+      width: 100%;
       padding: 0.3em 0.4em;
       margin-bottom: 20px;
       color: $text-color;
       font-size: 1rem;
       border-bottom: 1px solid $text-color;
+      @include tablet-size {
+        margin-bottom: 25px;
+      }
       &:last-of-type {
         margin-bottom: 40px;
+        @include tablet-size {
+          margin-bottom: 50px;
+        }
       }
     }
     &_buttons {
@@ -412,6 +456,9 @@ export default {
     &_add {
       flex: 1;
       margin-right: 25px;
+      @include tablet-size {
+        margin-right: 35px;
+      }
     }
     &_cancel {
       flex: 1;

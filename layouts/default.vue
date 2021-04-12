@@ -95,7 +95,7 @@ li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4em;
+  padding: 0.4em 0.6em;
   font-size: 1.2rem;
   box-shadow: 0 2px 5px -2px #ffd91d40;
   font-weight: bold;

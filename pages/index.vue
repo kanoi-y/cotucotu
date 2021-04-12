@@ -5,7 +5,7 @@
     </figure>
     <h1 class="top-title">
       <span class="highlight">CotuCotu</span
-      >は、「何回やったっけ？」を記録するサービスです。
+      >は、することの回数を記録し継続をサポートするサービスです。
     </h1>
     <button
       type="button"

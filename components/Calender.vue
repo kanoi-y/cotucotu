@@ -156,6 +156,7 @@ export default {
   &_arrow {
     width: 16px;
     height: auto;
+    cursor: pointer;
     @include tablet-size {
       width: 18px;
     }
