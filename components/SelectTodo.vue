@@ -142,6 +142,9 @@ $icon-width: 70px;
     @include tablet-size {
       margin-bottom: 40px;
     }
+    @include desktop-size {
+      margin-bottom: 60px;
+    }
   }
   &_icon_cont {
     padding-left: calc(50vw - #{$icon-width} / 2);
@@ -165,6 +168,9 @@ $icon-width: 70px;
     @include tablet-size {
       margin-bottom: 60px;
     }
+     @include desktop-size {
+      margin-bottom: 80px;
+    }
   }
   &_text {
     text-align: center;
@@ -173,13 +179,19 @@ $icon-width: 70px;
   }
   &_color_wrap {
     width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
     padding: 10px 12px;
     margin-bottom: 25px;
     display: flex;
     justify-content: space-around;
     @include tablet-size {
       padding: 20px 24px;
+      padding-left: calc(100vw - 100% + 24px);
       margin-bottom: 40px;
+    }
+    @include desktop-size {
+      margin-bottom: 60px;
     }
   }
   &_color {

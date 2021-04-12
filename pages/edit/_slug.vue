@@ -150,7 +150,6 @@ export default {
 
     // datesをtoDate()化してからデータの配列にコピー
     this.todo.dates.forEach(date => {
-      console.log(new Date(date).getTime());
       const realDate = Number.isNaN(new Date(date).getTime())
         ? date.toDate()
         : date;
@@ -291,6 +290,9 @@ export default {
 <style lang="scss" scoped>
 .edit {
   padding-bottom: 30px;
+  @include desktop-size {
+    padding-bottom: 60px;
+  }
   &_buttons {
     display: flex;
     justify-content: space-around;
@@ -327,6 +329,7 @@ export default {
       height: auto;
       display: block;
       margin: 0 auto;
+      cursor: pointer;
       @include tablet-size {
         width: 18px;
       }

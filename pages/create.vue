@@ -74,8 +74,11 @@ export default {
 <style lang="scss" scoped>
 
 .wrapper {
-  padding: 0;
+  padding: 0 0 40px;
   text-align: center;
+  @include desktop-size {
+    padding-bottom: 80px;
+  }
 }
 
 .create_btn {
