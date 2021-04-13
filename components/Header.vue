@@ -47,7 +47,7 @@ export default {
     border-radius: 4px;
     font-weight: bold;
     color: #fff;
-    background-color: #f8e6a4;
+    background-color: $highlight-color;
   }
 }
 </style>
