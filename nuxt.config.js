@@ -18,7 +18,7 @@ export default {
         hid: "description",
         name: "description",
         content:
-          "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
+          "CotuCotuは、することの回数を記録し継続をサポートするサービスです。"
       },
       {
         hid: "og:site_name",
@@ -36,7 +36,7 @@ export default {
         hid: "og:description",
         property: "og:description",
         content:
-          "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
+          "CotuCotuは、することの回数を記録し継続をサポートするサービスです。"
       },
       {
         hid: "og:image",
