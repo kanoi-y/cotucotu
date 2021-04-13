@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <figure class="top-image">
-      <img src="~/assets/images/cotucotu-top.svg" alt="CotuCotuのトップ画像" />
+      <img src="~/assets/images/cotucotu-top.svg" alt="CotuCotuのトップ画像" width="1200" height="800" />
     </figure>
     <h1 class="top-title">
       <span class="highlight">CotuCotu</span
@@ -99,6 +99,7 @@ export default {
   }
   img {
     width: 100%;
+    height: auto;
   }
 }
 
