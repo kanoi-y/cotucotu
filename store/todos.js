@@ -125,7 +125,6 @@ export const actions = {
         console.log("成功");
         commit("updateTodo", { todo, documentId });
         alert("変更を保存しました！");
-        // window.location.href = "/home";
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
