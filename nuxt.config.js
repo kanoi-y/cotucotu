@@ -27,7 +27,7 @@ export default {
         content: "CotuCotu"
       },
       { hid: "og:type", property: "og:type", content: "website" },
-      // { hid: "og:url", property: "og:url", content: "" },
+      { hid: "og:url", property: "og:url", content: "https://determined-jackson-d7cf0c.netlify.app/" },
       {
         hid: "og:title",
         property: "og:title",
@@ -39,11 +39,11 @@ export default {
         content:
           "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
       },
-      // {
-      //   hid: "og:image",
-      //   property: "og:image",
-      //   content: ""
-      // },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: "https://determined-jackson-d7cf0c.netlify.app/cotucotu_ogp.png"
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@kanoi_y" }
     ],
@@ -93,5 +93,8 @@ export default {
     ]
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {},
+  generate: {
+    fallback: true
+  }
 };
