@@ -61,6 +61,7 @@
             class="record_model_input"
             type="date"
             id="model_date"
+            placeholder="年-月-日"
             v-model="newDate"
           />
           <label class="record_model_label" for="model_count">回数</label>
