@@ -1,3 +1,5 @@
+const path = require('path');
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -25,6 +27,7 @@ export default {
         content: "CotuCotu"
       },
       { hid: "og:type", property: "og:type", content: "website" },
+      // { hid: "og:url", property: "og:url", content: "" },
       {
         hid: "og:title",
         property: "og:title",
@@ -36,11 +39,11 @@ export default {
         content:
           "CotuCotuは、は、することの回数を記録し継続をサポートするサービスです。"
       },
-      {
-        hid: "og:image",
-        property: "og:image",
-        content: "/cotucotu_ogp.png"
-      },
+      // {
+      //   hid: "og:image",
+      //   property: "og:image",
+      //   content: ""
+      // },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@kanoi_y" }
     ],
