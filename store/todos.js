@@ -14,8 +14,6 @@ export const mutations = {
     state.todos.forEach((td, index) => {
       if (td.id === documentId) {
         console.log(td);
-        // td = {...todo, id: documentId };
-        // Vue.set(td, ...todo);
         state.todos.splice(index, 1, {...todo, id: documentId });
       }
     });
@@ -100,9 +98,6 @@ export const actions = {
       })
       .then(docRef => {
         console.log("成功");
-        // const newTodo = { todo, dates: [], total: 0 };
-        // commit("addTodo", newTodo);
-        // fetchTodos(userId);
         window.location.href = "/home";
       })
       .catch(function(error) {

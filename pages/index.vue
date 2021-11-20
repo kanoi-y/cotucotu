@@ -64,7 +64,6 @@ export default {
   },
   watch: {
     status(val, old) {
-      console.log(val, old);
       if (val === "login") {
         const userId = this.$store.getters.getUserUid;
         const userName = this.$store.getters.getUserName;

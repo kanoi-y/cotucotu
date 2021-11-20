@@ -28,7 +28,6 @@ export const actions = {
       .signInWithPopup(provider)
       .then(function(result) {
         const user = result.user;
-        // user.status = "login";
         commit("setUser", user);
       })
       .catch(function(error) {
